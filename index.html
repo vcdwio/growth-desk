@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>涨粉作战台</title>
+<meta name="description" content="小红书 / 公众号 / 视频号涨粉工作流：定位、选题、内容包、发布检查、数据复盘。">
+<meta name="theme-color" content="#2B47C4">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="涨粉作战台">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0} img{max-width:100%} [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<style>
+/* 单列手机工作台：顶部目标仪表 + 底部导航，按「定位 → 选题 → 制作发布 → 复盘」顺序推进 */
+:root{
+  --bg:#EDF0EB; --surface:#FAFBF8; --sunken:#E3E8E1; --ink:#17201C; --muted:#5B6862; --line:#D2D9D1;
+  --accent:#2B47C4; --accent-ink:#FFFFFF; --accent-soft:#DDE3FA; --mark:#F1D24C; --mark-ink:#2A2406;
+  --good:#1E8556; --good-soft:#D7EEE2; --warn:#A86A12; --warn-soft:#F6E7CC; --bad:#BF3F2B; --bad-soft:#F6DCD6;
+  --f-display:"ZCOOL QingKe HuangYou","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-body:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F1412; --surface:#171E1B; --sunken:#121815; --ink:#E6ECE8; --muted:#97A49D; --line:#2A3430;
+  --accent:#8FA3FF; --accent-ink:#0E1430; --accent-soft:#1E2747; --mark:#CFAE2E; --mark-ink:#1C1803;
+  --good:#4CC28A; --good-soft:#15301F; --warn:#E2A94C; --warn-soft:#33260E; --bad:#F2765F; --bad-soft:#3A1913;
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F1412; --surface:#171E1B; --sunken:#121815; --ink:#E6ECE8; --muted:#97A49D; --line:#2A3430;
+  --accent:#8FA3FF; --accent-ink:#0E1430; --accent-soft:#1E2747; --mark:#CFAE2E; --mark-ink:#1C1803;
+  --good:#4CC28A; --good-soft:#15301F; --warn:#E2A94C; --warn-soft:#33260E; --bad:#F2765F; --bad-soft:#3A1913;
+  color-scheme:dark }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:0 calc(88px + env(safe-area-inset-bottom,0px))}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:400}
+h2{font-family:var(--f-display);font-size:26px;letter-spacing:.02em}
+h3{font-size:16px;font-weight:650}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:10px;margin-inline:-16px;padding-inline:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--f-display);font-size:22px;letter-spacing:.04em;white-space:nowrap;flex:none}
+.topr{display:flex;gap:8px;align-items:center;min-width:0}
+.daychip{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:99px;background:var(--surface);white-space:nowrap}
+.syncnote{font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* bottom nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs button{background:none;border:0;padding:8px 2px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;color:var(--muted);font-size:12px}
+nav.tabs button b{font-family:var(--f-display);font-weight:400;font-size:17px;line-height:1.1}
+nav.tabs button[aria-current="page"]{color:var(--accent)}
+nav.tabs button[aria-current="page"] b{color:var(--ink);background:linear-gradient(transparent 55%,var(--mark) 55%);padding:0 3px}
+
+section.view{display:flex;flex-direction:column;gap:16px;padding-top:18px}
+.head{display:flex;flex-direction:column;gap:4px}
+.step{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.plain{display:flex;flex-direction:column;gap:12px}
+
+/* hero gauge */
+.gauge{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:end}
+.big{font-family:var(--f-display);font-size:52px;line-height:1}
+.big small{font-family:var(--f-body);font-size:14px;color:var(--muted);margin-left:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good)} .pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.neutral{background:var(--sunken);color:var(--muted)}
+.pill.accent{background:var(--accent-soft);color:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.kpi{background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi .v{font-family:var(--f-mono);font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;color:var(--muted)}
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:9px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:0;border-top:2px solid var(--accent);vertical-align:middle;margin-right:4px}
+.legend i.dash{border-top:2px dashed var(--muted)}
+
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.ph{border:1px solid var(--line);border-radius:10px;padding:8px;font-size:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ph b{font-size:13px}
+.ph.on{border-color:var(--accent);background:var(--accent-soft)}
+ul.tasks{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+
+/* forms */
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font-size:15px;min-width:0}
+textarea{min-height:88px;resize:vertical;line-height:1.6}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.seg{display:flex;background:var(--sunken);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:none;padding:8px 4px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:650;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:11px 16px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:15px;font-weight:600;text-decoration:none;color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:none}
+.btn.sm{padding:6px 10px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.between{justify-content:space-between}
+.tier{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;padding:2px 6px;border-radius:5px;background:var(--sunken);color:var(--muted)}
+.btn.primary .tier{background:rgba(255,255,255,.18);color:inherit}
+
+.streambox{font-family:var(--f-mono);font-size:12px;color:var(--muted);background:var(--sunken);border-radius:10px;padding:10px;max-height:120px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+.note{border-left:3px solid var(--mark);padding:8px 12px;background:var(--sunken);border-radius:0 10px 10px 0;font-size:13px}
+.note.bad{border-left-color:var(--bad)}
+
+/* cards list */
+.list{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card.chosen{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--sunken);color:var(--muted)}
+.chip.p{background:var(--accent-soft);color:var(--accent)}
+.meter{display:inline-flex;gap:2px}
+.meter i{width:10px;height:6px;border-radius:2px;background:var(--line)}
+.meter i.on{background:var(--accent)}
+dl.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:13px}
+dl.kv dt{color:var(--muted)} dl.kv dd{margin:0;min-width:0}
+
+/* package */
+.pk-block{display:flex;flex-direction:column;gap:8px}
+.pk-title{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.pk-title input{margin-top:5px}
+.pk-title.sel{border-color:var(--accent);background:var(--accent-soft)}
+.gap{background:var(--mark);color:var(--mark-ink);border-radius:4px;padding:0 3px}
+.prompt{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.prompt code{font-family:var(--f-mono);font-size:12px;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:6px 0}
+.check input{margin-top:4px;width:18px;height:18px;flex:none}
+
+/* review */
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.metrics label{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.metrics input{padding:8px;font-size:14px;font-family:var(--f-mono)}
+.mchips{display:flex;gap:6px;flex-wrap:wrap}
+details>summary{cursor:pointer;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary .caret{transition:transform .15s}
+details[open]>summary .caret{transform:rotate(90deg)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:14px;z-index:9;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.demo-banner{background:var(--mark);color:var(--mark-ink);border-radius:10px;padding:8px 12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.empty{border:1px dashed var(--line);border-radius:var(--r);padding:20px 16px;text-align:left;display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:14px}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--bad-soft);color:var(--bad);border-radius:10px;padding:8px 10px;font-size:13px}
+
+.sheet-bg{position:fixed;inset:0;z-index:20;background:rgba(8,12,10,.5);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px}
+.sheet #aiPrompt{min-height:110px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.sheet #aiReply{min-height:130px}
+ol.steps{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:2px}
+
+@media (max-width:420px){
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .phases{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .big{font-size:44px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">涨粉作战台</div>
+    <div class="topr">
+      <span class="syncnote" id="syncNote">本机保存</span>
+      <span class="daychip" id="dayChip">第 1 天 / 150</span>
+    </div>
+  </header>
+
+  <div id="demoBanner" class="demo-banner" hidden style="margin-top:12px">
+    <span>正在查看示例数据，不是你的真实账号。</span>
+    <button class="btn sm" id="clearDemo">清空示例，开始我的账号</button>
+  </div>
+
+  <!-- 总览 -->
+  <section class="view" id="v-home">
+    <div class="panel">
+      <div class="gauge">
+        <div>
+          <div class="muted small">当前粉丝</div>
+          <div class="big num" id="curFans">0</div>
+        </div>
+        <span class="pill neutral" id="statusPill">还没有记录</span>
+        <div class="muted small" id="targetLine" style="grid-column:1/-1">今天应达 0</div>
+      </div>
+      <svg class="chart" id="chart" viewBox="0 0 340 190" role="img" aria-label="目标曲线与实际粉丝"></svg>
+      <div class="legend"><span><i class="dash"></i>目标曲线</span><span><i></i>实际粉丝</span></div>
+      <div class="row">
+        <input type="number" id="fansInput" inputmode="numeric" placeholder="输入今天的粉丝数" style="flex:1;min-width:140px">
+        <button class="btn primary" id="logFans">记录</button>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><span class="v" id="k7">–</span><span class="l">近 7 天日均涨粉</span></div>
+      <div class="kpi"><span class="v" id="kNeed">–</span><span class="l" id="kNeedL">达到下个里程碑需日均</span></div>
+      <div class="kpi"><span class="v" id="kPosts">0</span><span class="l">已发布笔记</span></div>
+      <div class="kpi"><span class="v" id="kWeek">0 / 7</span><span class="l">本周发布 / 计划</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="row between"><h3>阶段打法</h3><span class="pill accent" id="phaseName">起号期</span></div>
+      <div class="phases" id="phases"></div>
+      <ul class="tasks" id="phaseTasks"></ul>
+    </div>
+
+    <div class="panel" id="stratPanel">
+      <div class="row between"><h3>当前策略</h3><span class="muted small" id="stratDate"></span></div>
+      <div id="stratBody"></div>
+    </div>
+
+    <details class="panel">
+      <summary class="row between"><h3>目标与起点设置</h3><span class="caret">›</span></summary>
+      <div class="grid2">
+        <label class="f">开始日期<input type="date" id="sStart"></label>
+        <label class="f">起始粉丝<input type="number" id="sStartFans" inputmode="numeric"></label>
+        <label class="f">30 天目标<input type="number" id="sG30" inputmode="numeric"></label>
+        <label class="f">150 天目标<input type="number" id="sG150" inputmode="numeric"></label>
+      </div>
+      <div class="note">30 天 1 万、150 天 10 万属于头部速度。多数新号起号期要两周到两个月，前几篇数据差是常态。曲线前慢后快，按每次复盘结果调整，不要中途频繁换方向。</div>
+      <div class="row">
+        <button class="btn" id="saveSettings">保存设置</button>
+        <button class="btn ghost" id="loadDemo">载入示例数据</button>
+        <button class="btn ghost" id="resetAll">清空全部数据</button>
+      </div>
+      <div id="resetConfirm" class="confirm" hidden>
+        <span>会删除定位、选题、笔记和粉丝记录，无法恢复。</span>
+        <button class="btn sm" id="resetYes">确认清空</button>
+        <button class="btn sm ghost" id="resetNo">取消</button>
+      </div>
+    </details>
+
+    <div class="panel" id="backupPanel">
+      <div class="row between"><h3>备份与换手机</h3><span class="pill neutral" id="bkPill">未备份</span></div>
+      <p class="small muted" id="bkDesc">记录保存在这台手机的浏览器里，刷新、关掉再打开都还在。换手机或清理浏览器数据之前，先复制备份码，存到微信「文件传输助手」或备忘录。</p>
+      <div class="row">
+        <button class="btn" id="bkCopy">复制备份码</button>
+        <button class="btn" id="bkFile">下载备份文件</button>
+      </div>
+      <textarea id="bkIn" placeholder="在新手机上：把备份码粘贴到这里，再点「恢复」" style="min-height:64px"></textarea>
+      <div class="row">
+        <button class="btn" id="bkImport">从备份码恢复</button>
+        <label class="btn ghost" for="bkPick">选择备份文件</label>
+        <input type="file" id="bkPick" accept=".json,.txt,application/json,text/plain" hidden>
+      </div>
+      <p class="small" id="bkMsg"></p>
+      <div id="bkConfirm" class="confirm" hidden>
+        <span id="bkConfirmText">恢复会覆盖这台手机上的现有记录。</span>
+        <button class="btn sm" id="bkYes">确认恢复</button>
+        <button class="btn sm ghost" id="bkNo">取消</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 定位 -->
+  <section class="view" id="v-pos" hidden>
+    <div class="head"><span class="step">第 1 步</span><h2>账号定位</h2><p class="muted small">方向要从你的真实经历和资源里长出来，才能持续写 100 篇以上。</p></div>
+    <div class="panel">
+      <label class="f">主平台
+        <div class="seg" id="platSeg">
+          <button type="button" data-v="xhs">小红书</button>
+          <button type="button" data-v="gzh">公众号</button>
+          <button type="button" data-v="sph">视频号</button>
+        </div>
+      </label>
+      <label class="f">你是谁（职业、经历、正在经历的事）<textarea id="pWho" placeholder="例：互联网运营 6 年，刚从北京搬到成都，租了老房子自己改造"></textarea></label>
+      <label class="f">你擅长什么 / 手里有什么资源<textarea id="pSkills" placeholder="例：会用 AI 工具做图，懂一点软装，周末常去川西"></textarea></label>
+      <div class="grid2">
+        <label class="f">每天可投入<select id="pTime"><option>30分钟以内</option><option>1-2小时</option><option>3小时以上</option><option>全职</option></select></label>
+        <label class="f">出镜方式<select id="pFace"><option>可以出镜</option><option>只露手或声音</option><option>完全不出镜</option></select></label>
+        <label class="f">每月工具预算<select id="pBudget"><option>0元</option><option>每月300元以内</option><option>每月300-1000元</option><option>每月1000元以上</option></select></label>
+        <label class="f">变现目标<select id="pMon"><option>接广告+带货</option><option>引流到自己的产品或服务</option><option>知识付费</option><option>先涨粉再说</option></select></label>
+      </div>
+      <button class="btn primary" id="genDir">生成 3 个账号方向 <span class="tier">深度模型</span></button>
+      <div class="streambox" id="dirStream" hidden></div>
+      <p class="small muted" id="dirMsg"></p>
+    </div>
+    <div class="list" id="dirList"></div>
+    <details class="panel">
+      <summary class="row between"><h3>常见赛道参考（不用 AI 也能选）</h3><span class="caret">›</span></summary>
+      <div class="list" id="presetList"></div>
+    </details>
+  </section>
+
+  <!-- 选题 -->
+  <section class="view" id="v-topic" hidden>
+    <div class="head"><span class="step">第 2 步</span><h2>选题池</h2><p class="muted small" id="topicSub">先在「定位」里选一个方向。</p></div>
+    <div class="panel" id="pillarPanel">
+      <h3>内容支柱与权重</h3>
+      <div class="chips" id="pillarChips"></div>
+      <p class="small muted">权重来自最近一次复盘；没复盘前三个支柱平均轮换。</p>
+    </div>
+    <div class="panel">
+      <button class="btn primary" id="genTopics">按当前策略生成 10 个选题 <span class="tier">标准模型</span></button>
+      <div class="streambox" id="topicStream" hidden></div>
+      <p class="small muted" id="topicMsg"></p>
+      <div class="row">
+        <input type="text" id="manualTopic" placeholder="手动加一个选题" style="flex:1;min-width:160px">
+        <button class="btn" id="addTopic">加入</button>
+      </div>
+    </div>
+    <div class="list" id="topicList"></div>
+  </section>
+
+  <!-- 制作 -->
+  <section class="view" id="v-make" hidden>
+    <div class="head"><span class="step">第 3 步</span><h2>制作与发布</h2><p class="muted small">AI 出草稿和素材提示词，你补真实经历、自己点发布。</p></div>
+    <div class="panel" id="makeTop">
+      <div id="makeTopic" class="muted">从选题池点「去制作」，或在下面直接输入选题。</div>
+      <input type="text" id="makeTopicInput" placeholder="选题标题">
+      <label class="f">形式
+        <div class="seg" id="fmtSeg"><button type="button" data-v="图文">图文笔记</button><button type="button" data-v="视频">短视频</button><button type="button" data-v="长文">公众号长文</button></div>
+      </label>
+      <button class="btn primary" id="genPkg">生成内容包 <span class="tier">深度模型</span></button>
+      <div class="streambox" id="pkgStream" hidden></div>
+      <p class="small muted" id="pkgMsg"></p>
+    </div>
+    <div id="pkgOut" class="plain"></div>
+  </section>
+
+  <!-- 复盘 -->
+  <section class="view" id="v-review" hidden>
+    <div class="head"><span class="step">第 4 步</span><h2>数据复盘</h2><p class="muted small">发布 24 小时和 72 小时后各录一次。数据来自 App 里的笔记数据页。</p></div>
+    <div class="panel">
+      <h3>按内容支柱汇总</h3>
+      <div id="pillarTable"></div>
+      <div id="ruleAdvice" class="plain"></div>
+      <button class="btn primary" id="genReview">AI 复盘并调整策略 <span class="tier">深度模型</span></button>
+      <div class="streambox" id="reviewStream" hidden></div>
+      <p class="small muted" id="reviewMsg"></p>
+    </div>
+    <div class="list" id="postList"></div>
+    <p class="small muted">参考线说明：点击率 = 阅读 ÷ 曝光，低于 2.5% 先改封面标题；收藏率 = 收藏 ÷ 阅读，3% 以上算合格；涨粉转化 = 涨粉 ÷ 阅读。这些阈值来自第三方运营经验，平台没有公布官方标准。</p>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="主导航"><div class="in">
+  <button data-tab="home" aria-current="page"><b>总览</b>目标</button>
+  <button data-tab="pos"><b>定位</b>第1步</button>
+  <button data-tab="topic"><b>选题</b>第2步</button>
+  <button data-tab="make"><b>制作</b>第3步</button>
+  <button data-tab="review"><b>复盘</b>第4步</button>
+</div></nav>
+<div class="toast" id="toast" role="status"></div>
+
+<div class="sheet-bg" id="aiSheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="aiSheetT">
+    <div class="row between"><h3 id="aiSheetT">用任意 AI 生成</h3><button class="btn sm ghost" id="aiClose">关闭</button></div>
+    <ol class="steps small">
+      <li>复制下面的提示词</li>
+      <li>粘贴给豆包、Kimi、DeepSeek、通义、ChatGPT 或 Claude，建议用<b id="aiTierHint">深度思考</b>模式</li>
+      <li>把它的完整回复粘贴回来，点「导入」</li>
+    </ol>
+    <textarea id="aiPrompt" readonly aria-label="提示词"></textarea>
+    <div class="row"><button class="btn primary" id="aiCopy">复制提示词</button></div>
+    <textarea id="aiReply" placeholder="把 AI 的完整回复粘贴到这里" aria-label="AI 回复"></textarea>
+    <p class="small" id="aiErr" style="color:var(--bad)"></p>
+    <button class="btn primary" id="aiImport">导入结果</button>
+  </div>
+</div>
+
+<script>
+(() => {
+"use strict";
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = n => (n == null || isNaN(n)) ? "–" : Math.round(n).toLocaleString("zh-CN");
+const pct = n => (n == null || !isFinite(n)) ? "–" : (n * 100).toFixed(n < 0.1 ? 1 : 0) + "%";
+const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+function localDate(d = new Date()) { const z = new Date(d.getTime() - d.getTimezoneOffset() * 60000); return z.toISOString().slice(0, 10); }
+function daysBetween(a, b) { return Math.round((new Date(b + "T00:00:00") - new Date(a + "T00:00:00")) / 86400000); }
+function addDays(a, n) { const d = new Date(a + "T00:00:00"); d.setDate(d.getDate() + n); return localDate(d); }
+const arr = x => Array.isArray(x) ? x : [];
+const PLAT = { xhs: "小红书", gzh: "微信公众号", sph: "微信视频号" };
+
+/* ---------- 预置赛道 ---------- */
+const PRESETS = [
+  { name: "AI 工具实操", persona: "把 AI 工具用进日常工作的打工人", audience: "想提效的职场人、学生", edge: "每篇只解决一个具体任务，附可复制步骤", pillars: ["工具实测", "提示词模板", "工作流拆解"], formats: "图文 3:4 截图教程 + 30 秒录屏", speed: 4, monetize: "工具推广、课程、社群", risk: "同质化严重，需要真实使用场景", first3: ["用 AI 10 分钟做完周报的完整流程", "5 个我每天都在用的提示词", "免费 AI 做图工具横评"] },
+  { name: "租房改造", persona: "预算有限也想住得体面的租房人", audience: "一二线城市 22-32 岁租房人群", edge: "全程真实花费清单和前后对比", pillars: ["改造前后", "平价好物", "避坑清单"], formats: "图文前后对比 + 改造过程视频", speed: 4, monetize: "家居好物带货、品牌合作", risk: "需要真实房子持续产出", first3: ["800 元改造老破小卧室全记录", "租房必买的 10 件小东西", "签租房合同前我会检查的 7 处"] },
+  { name: "打工人快手菜", persona: "下班 20 分钟吃上饭的上班族", audience: "独居上班族", edge: "严格控时和成本，标注每道菜花费", pillars: ["一人食", "周末备餐", "厨房工具"], formats: "竖屏视频 30-60 秒 + 步骤图文", speed: 3, monetize: "厨具、食材带货", risk: "赛道拥挤，需要画面质感", first3: ["一周 5 天午饭便当 100 元搞定", "空气炸锅 15 分钟晚餐 3 道", "冰箱剩菜救活指南"] },
+  { name: "周边小众游", persona: "只用周末出发的城市周边玩家", audience: "本地上班族、情侣", edge: "交通、花费、避坑写得像攻略书", pillars: ["周末路线", "小众地点", "出行清单"], formats: "图文 9 宫格实拍 + 路线图", speed: 3, monetize: "酒店民宿合作、本地探店", risk: "受季节影响，需要真实到访", first3: ["高铁 1 小时可达的 5 个小城", "一日游路线 + 花费明细", "被低估的城市公园"] },
+  { name: "备考上岸经验", persona: "刚上岸、愿意把方法讲透的学姐学长", audience: "备考考研、考公、考证人群", edge: "时间表、资料清单、失败复盘都公开", pillars: ["备考计划", "资料测评", "心态与复盘"], formats: "图文清单 + 学习 vlog", speed: 4, monetize: "资料、课程、学习用品", risk: "强季节性，要说清结果的真实性", first3: ["3 个月上岸时间表", "我用过的资料红黑榜", "第一次失败后改了什么"] },
+  { name: "平价穿搭", persona: "普通身材的通勤穿搭参考", audience: "20-35 岁上班族女性", edge: "按身材问题和预算出方案", pillars: ["一衣多穿", "身材问题解决", "平价单品"], formats: "真人出镜图文 + 换装视频", speed: 4, monetize: "服饰带货、品牌合作", risk: "通常需要真人出镜", first3: ["一件白衬衫的 7 天搭配", "小个子显高的 5 个细节", "200 元以内通勤包测评"] },
+  { name: "养宠避坑", persona: "第一次养猫/狗的新手家长", audience: "新手养宠人群", edge: "把踩过的坑和花费写清楚", pillars: ["新手必看", "用品测评", "日常记录"], formats: "日常短视频 + 清单图文", speed: 3, monetize: "宠物用品带货", risk: "医疗类内容要谨慎", first3: ["接猫回家前要准备的 12 样东西", "猫粮怎么看配料表", "第一个月花了多少钱"] },
+  { name: "AI 视觉创作", persona: "用 AI 做系列插画/海报的创作者", audience: "设计爱好者、想学 AI 做图的人", edge: "固定系列主题 + 公开提示词", pillars: ["系列作品", "提示词拆解", "工具教程"], formats: "图文作品集 3:4 + 过程录屏", speed: 3, monetize: "定制约稿、课程、素材包", risk: "必须标注 AI 生成，不能模仿他人作品或角色", first3: ["24 节气 AI 插画系列第 1 期", "一张图的提示词完整拆解", "即梦和可灵做图对比"] }
+];
+
+/* ---------- 阶段 ---------- */
+const PHASES = [
+  { from: 0, to: 14, name: "起号期", goal: "测出能跑的内容支柱", tasks: ["每天 1 篇，三个支柱轮流发", "每篇发布 24 小时后录入数据", "每天在同赛道真诚评论 10 条，让系统认识你"] },
+  { from: 15, to: 30, name: "放大期", goal: "复制跑出来的结构", tasks: ["数据最好的支柱占六成以上", "爆款选题换角度再做 2-3 篇", "爆款笔记置顶首评，说清关注你能得到什么"] },
+  { from: 31, to: 90, name: "系列化", goal: "给人关注的理由", tasks: ["高收藏内容做成系列和合集", "每周至少 1 条视频测试新形式", "主页简介和置顶笔记讲清楚账号价值"] },
+  { from: 91, to: 150, name: "破圈期", goal: "扩大人群", tasks: ["测试相邻赛道选题", "公众号、视频号同步分发改写版", "找同量级博主联动"] }
+];
+
+/* ---------- 状态 ---------- */
+function defaultProfile() {
+  return { v: 1, platform: "xhs", startDate: localDate(), startFans: 0, goal30: 10000, goal150: 100000,
+    inputs: { who: "", skills: "", time: "1-2小时", face: "可以出镜", budget: "每月300元以内", monetize: "接广告+带货" },
+    directions: [], chosen: null, topics: [], strategy: null, fansLog: [], draft: null, demo: false };
+}
+let P = defaultProfile();
+let POSTS = [];
+let SAMPLE = null;
+const store = { mode: "local", profileRef: null, postsCol: null, chain: Promise.resolve() };
+const LS_KEY = "zhangfen-zhantai-v1";
+
+function lsGet() { try { const s = localStorage.getItem(LS_KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+function lsSet() { try { localStorage.setItem(LS_KEY, JSON.stringify({ profile: P, posts: POSTS })); } catch (e) {} }
+const clone = o => JSON.parse(JSON.stringify(o));
+
+let saveTimer = null;
+function flushCloud() {
+  saveTimer = null;
+  const body = clone(P);
+  store.chain = store.chain.then(() => store.profileRef.set(body)).catch(e => syncErr(e));
+}
+function saveProfile() {
+  lsSet(); // 本机立即保存，关页面也不丢
+  if (store.mode !== "cloud") return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flushCloud, 500);
+}
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "hidden") return;
+  const be = document.getElementById("bodyEdit");
+  if (be && P.draft && P.draft.body !== be.value) { P.draft.body = be.value; lsSet(); if (store.mode === "cloud") flushCloud(); }
+  if (saveTimer) { clearTimeout(saveTimer); flushCloud(); }
+});
+function savePost(post) {
+  if (store.mode === "cloud") {
+    const body = clone(post); delete body.id;
+    store.chain = store.chain.then(() => store.postsCol.doc(post.id).set(body)).catch(e => syncErr(e));
+  } else lsSet();
+}
+function deletePost(id) {
+  if (store.mode === "cloud") store.chain = store.chain.then(() => store.postsCol.doc(id).delete()).catch(e => syncErr(e));
+  else lsSet();
+}
+function syncErr(e) {
+  const code = e && e.code;
+  $("#syncNote").textContent = code === "quota_exceeded" ? "云端已满，删几篇旧笔记" : "云端保存失败，已暂存本机";
+  lsSet();
+}
+
+async function initStore() {
+  const local = lsGet();
+  if (local && local.profile) { P = { ...defaultProfile(), ...local.profile }; POSTS = local.posts || []; renderAll(); }
+  const c = window.claude;
+  if (!c || !c.use) return;
+  samplePromise = c.use("sample").then(s => { SAMPLE = s; updateAiAvail(); return s; }).catch(() => null);
+  try {
+    const [db, user] = await Promise.all([c.use("db"), c.use("user")]);
+    if (!db || !user) return;
+    const id = await user.id();
+    if (!id) return;
+    store.profileRef = db.doc("data/users/" + id + "/profile");
+    store.postsCol = store.profileRef.collection("posts");
+    const snap = await store.profileRef.get();
+    const ps = await store.postsCol.limit(500).get();
+    store.mode = "cloud";
+    $("#syncNote").textContent = "已云端同步";
+    if (snap.exists) {
+      P = { ...defaultProfile(), ...clone(snap.data()) };
+      POSTS = ps.docs.map(d => ({ id: d.id, ...clone(d.data()) }));
+    } else if (local && local.profile) {
+      saveProfile(); POSTS.forEach(savePost);
+    }
+    renderAll();
+  } catch (e) { store.mode = "local"; }
+}
+
+/* ---------- AI ---------- */
+const AI_ERR = {
+  not_granted: "你没有允许这个页面使用 Claude。可以用下方的预置内容继续。",
+  sampling_disabled: "当前账号不能在页面里调用 Claude。",
+  rate_limited: "调用太频繁或额度用完了，稍后再试。",
+  invalid_json: "这次返回的格式不对，再点一次试试。",
+  refused: "这个请求被拒绝了，换个说法再试。",
+  session_expired: "登录已过期，请重新登录 Claude。",
+  cancelled: "已停止。"
+};
+function updateAiAvail() {
+  const ok = !!SAMPLE;
+  ["#genDir", "#genTopics", "#genPkg", "#genReview"].forEach(s => { const b = $(s); if (b) b.title = ok ? "" : "会生成一段提示词，复制到任意 AI 应用里使用"; });
+}
+
+/* 手动模式：没有内置 AI 时，复制提示词到任意 AI，再把回复粘回来 */
+function parseLooseJSON(text) {
+  const t = String(text || "").trim().replace(/[“”]/g, '"');
+  try { return JSON.parse(t); } catch (e) {}
+  const fence = t.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fence) { try { return JSON.parse(fence[1].trim()); } catch (e) {} }
+  const s = t.search(/[\[{]/), e = Math.max(t.lastIndexOf("}"), t.lastIndexOf("]"));
+  if (s >= 0 && e > s) { try { return JSON.parse(t.slice(s, e + 1)); } catch (e2) {} }
+  return undefined;
+}
+let manualResolve = null;
+function manualAI(prompt, { tier = "default", msgEl }) {
+  if (manualResolve) manualResolve(null);
+  $("#aiPrompt").value = prompt + "\n\n只输出 JSON，不要任何解释文字。";
+  $("#aiReply").value = ""; $("#aiErr").textContent = "";
+  $("#aiTierHint").textContent = tier === "complex" ? "深度思考" : "普通";
+  $("#aiSheet").hidden = false;
+  if (msgEl) msgEl.textContent = "";
+  return new Promise(res => { manualResolve = res; });
+}
+function closeManual(val) { $("#aiSheet").hidden = true; const r = manualResolve; manualResolve = null; if (r) r(val); }
+$("#aiClose").addEventListener("click", () => closeManual(null));
+$("#aiSheet").addEventListener("click", e => { if (e.target.id === "aiSheet") closeManual(null); });
+$("#aiCopy").addEventListener("click", () => copy($("#aiPrompt").value));
+$("#aiImport").addEventListener("click", () => {
+  const v = parseLooseJSON($("#aiReply").value);
+  if (v === undefined || v === null || typeof v !== "object") { $("#aiErr").textContent = "没认出 JSON。请把 AI 的回复完整粘贴过来；如果它加了说明文字，让它「只输出 JSON」再发一次。"; return; }
+  closeManual(v); toast("已导入");
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#aiSheet").hidden) closeManual(null); });
+
+let samplePromise = Promise.resolve(null), sampleOff = false;
+async function aiJSON(prompt, { tier = "default", btn, streamEl, msgEl }) {
+  if (!SAMPLE && !sampleOff) SAMPLE = await samplePromise;
+  if (!SAMPLE) return manualAI(prompt, { tier, msgEl });
+  let fallback = false;
+  const label = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = "生成中…";
+  if (msgEl) msgEl.textContent = "思考中，复杂任务可能要 30-60 秒。";
+  if (streamEl) { streamEl.hidden = false; streamEl.textContent = "思考中…"; }
+  try {
+    const data = await SAMPLE.json(prompt, { modelTier: tier, cache: false, onText: ({ text }) => { if (streamEl) { streamEl.textContent = text.slice(-600); streamEl.scrollTop = streamEl.scrollHeight; } } });
+    if (msgEl) msgEl.textContent = "";
+    return data;
+  } catch (e) {
+    if (e && ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(e.code)) {
+      SAMPLE = null; sampleOff = true; fallback = true;
+    } else {
+      if (msgEl) msgEl.textContent = AI_ERR[e && e.code] || "生成中断了，再点一次试试。";
+      return null;
+    }
+  } finally {
+    btn.disabled = false; btn.innerHTML = label;
+    if (streamEl) streamEl.hidden = true;
+  }
+  return fallback ? manualAI(prompt, { tier, msgEl }) : null;
+}
+const RULES = `合规要求（必须遵守）：
+- 不编造个人经历、数据、截图和效果承诺；需要真实经历的地方用【需你补充：……】占位，让创作者自己填。
+- 不冒充他人、不使用名人或他人作品形象、不模仿受版权保护的角色和作品。
+- 不用"最""第一""100%"等极限词和医疗功效词。
+- AI 生成的图片和视频，发布时要在平台勾选 AI 生成声明。
+- 内容要有信息增量，避免模板化的同质内容。`;
+
+/* ---------- 指标 ---------- */
+function metrics(m) {
+  if (!m) return null;
+  const n = k => Number(m[k]) || 0;
+  const exp = n("exposure"), reads = n("reads"), likes = n("likes"), saves = n("saves"), comments = n("comments"), shares = n("shares"), follows = n("follows");
+  if (!reads && !exp) return null;
+  return {
+    ctr: exp ? reads / exp : null,
+    save: reads ? saves / reads : null,
+    eng: reads ? (likes + saves + comments) / reads : null,
+    conv: reads ? follows / reads : null,
+    ces: likes + saves + 4 * comments + 4 * shares + 8 * follows,
+    reads, follows
+  };
+}
+function grade(kind, v) {
+  if (v == null) return "neutral";
+  const t = { ctr: [0.025, 0.08], save: [0.03, 0.08], conv: [0.003, 0.01], eng: [0.04, 0.1] }[kind];
+  return v >= t[1] ? "good" : v >= t[0] ? "warn" : "bad";
+}
+
+/* ---------- 目标 ---------- */
+function targetAt(day) {
+  const s = Number(P.startFans) || 0, g30 = Number(P.goal30) || 10000, g150 = Number(P.goal150) || 100000;
+  if (day <= 0) return s;
+  if (day <= 30) return Math.round(s + (g30 - s) * Math.pow(day / 30, 1.6));
+  if (day <= 150) return Math.round(g30 + (g150 - g30) * ((day - 30) / 120));
+  return g150;
+}
+const dayNo = () => Math.max(0, daysBetween(P.startDate, localDate()));
+function latestFans() {
+  const log = [...P.fansLog].sort((a, b) => a.date.localeCompare(b.date));
+  return log.length ? log[log.length - 1] : null;
+}
+function phaseOf(d) { return PHASES.find(p => d >= p.from && d <= p.to) || PHASES[PHASES.length - 1]; }
+
+/* ---------- 渲染：总览 ---------- */
+function renderHome() {
+  const d = dayNo();
+  $("#dayChip").textContent = `第 ${Math.min(d + 1, 999)} 天 / 150`;
+  const last = latestFans();
+  const cur = last ? last.fans : Number(P.startFans) || 0;
+  $("#curFans").textContent = fmt(cur);
+  const tgt = targetAt(d);
+  $("#targetLine").innerHTML = `今天应达 <span class="num">${fmt(tgt)}</span> · 30 天目标 <span class="num">${fmt(P.goal30)}</span> · 150 天目标 <span class="num">${fmt(P.goal150)}</span>`;
+  const pill = $("#statusPill");
+  if (!last) { pill.className = "pill neutral"; pill.textContent = "还没有记录"; }
+  else {
+    const ld = daysBetween(P.startDate, last.date), lt = targetAt(ld);
+    const r = lt > 0 ? last.fans / lt : 1;
+    const gap = last.fans - lt;
+    if (r >= 1) { pill.className = "pill good"; pill.textContent = `领先 ${fmt(gap)}`; }
+    else if (r >= 0.8) { pill.className = "pill warn"; pill.textContent = `差 ${fmt(-gap)}`; }
+    else { pill.className = "pill bad"; pill.textContent = `落后 ${fmt(-gap)}`; }
+  }
+  // 7 日日均
+  const log = [...P.fansLog].sort((a, b) => a.date.localeCompare(b.date));
+  let avg7 = null;
+  if (log.length >= 2) {
+    const end = log[log.length - 1];
+    const startCand = log.filter(x => daysBetween(x.date, end.date) <= 7);
+    const st = startCand[0];
+    const span = daysBetween(st.date, end.date);
+    if (span > 0) avg7 = (end.fans - st.fans) / span;
+  }
+  $("#k7").textContent = avg7 == null ? "–" : fmt(avg7);
+  const ms = d < 30 ? 30 : 150;
+  const left = Math.max(1, ms - d);
+  $("#kNeed").textContent = fmt(Math.max(0, (targetAt(ms) - cur) / left));
+  $("#kNeedL").textContent = `第 ${ms} 天达 ${fmt(targetAt(ms))} 需日均`;
+  $("#kPosts").textContent = POSTS.length;
+  const wk = POSTS.filter(p => p.publishedAt && daysBetween(p.publishedAt, localDate()) < 7).length;
+  $("#kWeek").textContent = `${wk} / 7`;
+  // phases
+  const ph = phaseOf(d);
+  $("#phaseName").textContent = ph.name;
+  $("#phases").innerHTML = PHASES.map(p => `<div class="ph ${p === ph ? "on" : ""}"><b>${esc(p.name)}</b><span class="muted num">D${p.from + 1}-${p.to + 1}</span><span>${esc(p.goal)}</span></div>`).join("");
+  $("#phaseTasks").innerHTML = ph.tasks.map(t => `<li>${esc(t)}</li>`).join("");
+  // strategy
+  const s = P.strategy;
+  if (s) {
+    $("#stratDate").textContent = s.at ? "复盘于 " + s.at : "";
+    $("#stratBody").innerHTML = `<p>${esc(s.verdict || "")}</p>
+      ${s.outlook ? `<div class="note">${esc(s.outlook)}</div>` : ""}
+      ${arr(s.next7).length ? `<p class="small muted">接下来 7 天：${s.next7.map(x => esc(x.title)).slice(0, 3).join(" / ")}…</p>` : ""}`;
+  } else if (!P.chosen) {
+    $("#stratDate").textContent = "";
+    $("#stratBody").innerHTML = `<div class="empty"><b style="color:var(--ink)">还没开始</b><span>先去「定位」选一个账号方向，再到「选题」生成第一批选题。发布后回到「复盘」录数据，策略会出现在这里。</span><div><button class="btn primary sm" data-go="pos">去定位</button></div></div>`;
+  } else {
+    $("#stratDate").textContent = "";
+    $("#stratBody").innerHTML = `<p>方向：<b>${esc(P.chosen.name)}</b>（${esc(PLAT[P.platform])}）。发满 5 篇并录入数据后，在「复盘」生成第一次策略调整。</p>`;
+  }
+  // settings
+  $("#sStart").value = P.startDate; $("#sStartFans").value = P.startFans; $("#sG30").value = P.goal30; $("#sG150").value = P.goal150;
+  $("#demoBanner").hidden = !P.demo;
+  drawChart();
+  renderBackup();
+}
+
+function drawChart() {
+  const W = 340, H = 190, L = 40, R = 10, T = 10, B = 26;
+  const pw = W - L - R, ph = H - T - B;
+  const log = [...P.fansLog].sort((a, b) => a.date.localeCompare(b.date));
+  const maxA = Math.max(0, ...log.map(x => x.fans));
+  const ymax = Math.max(Number(P.goal150) || 100000, maxA) * 1.02;
+  const x = d => L + pw * Math.min(150, Math.max(0, d)) / 150;
+  const y = v => T + ph * (1 - Math.sqrt(Math.max(0, v) / ymax)); // 平方根刻度，让第一个月也看得清
+  const ticksV = [0, 1000, 10000, 40000, Number(P.goal150) || 100000].filter((v, i, a) => v <= ymax && a.indexOf(v) === i);
+  let s = "";
+  ticksV.forEach(v => { s += `<line x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="var(--line)" stroke-width="0.6"/><text x="${L - 4}" y="${(y(v) + 3).toFixed(1)}" text-anchor="end">${v >= 10000 ? (v / 10000) + "万" : v >= 1000 ? (v / 1000) + "k" : v}</text>`; });
+  [0, 30, 60, 90, 120, 150].forEach(d => { s += `<text x="${x(d).toFixed(1)}" y="${H - 8}" text-anchor="middle">D${d}</text>`; });
+  let path = "";
+  for (let d = 0; d <= 150; d += 2) path += (d ? "L" : "M") + x(d).toFixed(1) + "," + y(targetAt(d)).toFixed(1);
+  s += `<path d="${path}" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="4 3"/>`;
+  [30, 150].forEach(d => { s += `<circle cx="${x(d).toFixed(1)}" cy="${y(targetAt(d)).toFixed(1)}" r="3" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.2"/>`; });
+  const td = dayNo();
+  if (td <= 150) s += `<line x1="${x(td).toFixed(1)}" x2="${x(td).toFixed(1)}" y1="${T}" y2="${T + ph}" stroke="var(--mark)" stroke-width="2"/>`;
+  if (log.length) {
+    const pts = log.map(e => [x(daysBetween(P.startDate, e.date)), y(e.fans)]);
+    const line = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join("");
+    if (pts.length > 1) s += `<path d="${line}L${pts[pts.length - 1][0].toFixed(1)},${T + ph}L${pts[0][0].toFixed(1)},${T + ph}Z" fill="var(--accent)" opacity="0.12"/>`;
+    s += `<path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>`;
+    const e = pts[pts.length - 1];
+    s += `<circle cx="${e[0].toFixed(1)}" cy="${e[1].toFixed(1)}" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>`;
+  }
+  $("#chart").innerHTML = s;
+}
+
+/* ---------- 渲染：定位 ---------- */
+function dirCard(d, i, src) {
+  const chosen = P.chosen && P.chosen.name === d.name;
+  const sp = Math.max(1, Math.min(5, Number(d.speed) || 3));
+  return `<div class="card ${chosen ? "chosen" : ""}">
+    <div class="row between"><h3>${esc(d.name)}</h3>${chosen ? '<span class="pill accent">当前方向</span>' : ""}</div>
+    <p class="small">${esc(d.persona)}</p>
+    <div class="chips">${arr(d.pillars).map(p => `<span class="chip p">${esc(p)}</span>`).join("")}</div>
+    <dl class="kv">
+      <dt>人群</dt><dd>${esc(d.audience)}</dd>
+      <dt>差异点</dt><dd>${esc(d.edge)}</dd>
+      <dt>形式</dt><dd>${esc(d.formats)}</dd>
+      <dt>30天万粉</dt><dd><span class="meter">${[1,2,3,4,5].map(k => `<i class="${k <= sp ? "on" : ""}"></i>`).join("")}</span> <span class="muted small">${sp}/5</span></dd>
+      <dt>变现</dt><dd>${esc(d.monetize)}</dd>
+      <dt>风险</dt><dd>${esc(d.risk)}</dd>
+      ${arr(d.first3).length ? `<dt>首发</dt><dd>${arr(d.first3).map(esc).join("；")}</dd>` : ""}
+    </dl>
+    ${chosen ? "" : `<button class="btn sm" data-choose="${src}:${i}">选这个方向</button>`}
+  </div>`;
+}
+function renderPos() {
+  $$("#platSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === P.platform)));
+  const I = P.inputs;
+  if (document.activeElement !== $("#pWho")) $("#pWho").value = I.who || "";
+  if (document.activeElement !== $("#pSkills")) $("#pSkills").value = I.skills || "";
+  $("#pTime").value = I.time; $("#pFace").value = I.face; $("#pBudget").value = I.budget; $("#pMon").value = I.monetize;
+  $("#dirList").innerHTML = (P.directions || []).map((d, i) => dirCard(d, i, "ai")).join("");
+  $("#presetList").innerHTML = PRESETS.map((d, i) => dirCard(d, i, "preset")).join("");
+}
+function choose(d) {
+  P.chosen = clone(d);
+  P.strategy = P.strategy && P.strategy.dir === d.name ? P.strategy : null;
+  if (!P.topics.length) arr(d.first3).forEach(t => P.topics.push({ id: uid(), title: t, pillar: (d.pillars || [])[0] || "", type: "首发", keyword: "", hook: "", status: "new" }));
+  saveProfile(); renderAll(); toast("已选定方向：" + d.name);
+}
+
+/* ---------- 渲染：选题 ---------- */
+function weights() {
+  const ps = (P.chosen && P.chosen.pillars) || [];
+  const w = (P.strategy && P.strategy.weights) || {};
+  const out = {};
+  ps.forEach(p => out[p] = w[p] != null ? Number(w[p]) : Math.round(100 / ps.length));
+  Object.keys(w).forEach(k => { if (!(k in out)) out[k] = Number(w[k]); });
+  return out;
+}
+function renderTopic() {
+  $("#topicSub").textContent = P.chosen ? `${PLAT[P.platform]} · ${P.chosen.name} · ${P.chosen.persona}` : "先在「定位」里选一个方向。";
+  const w = weights();
+  $("#pillarChips").innerHTML = Object.keys(w).length ? Object.entries(w).map(([k, v]) => `<span class="chip p">${esc(k)} <span class="num">${v}%</span></span>`).join("") : '<span class="muted small">选定方向后出现</span>';
+  const order = { new: 0, made: 1, posted: 2 };
+  const list = [...P.topics].sort((a, b) => (order[a.status] || 0) - (order[b.status] || 0));
+  $("#topicList").innerHTML = list.length ? list.map(t => `<div class="card">
+      <div class="row between"><h3 style="flex:1;min-width:0">${esc(t.title)}</h3>
+        <span class="pill ${t.status === "posted" ? "good" : t.status === "made" ? "warn" : "neutral"}">${t.status === "posted" ? "已发布" : t.status === "made" ? "已制作" : "待做"}</span></div>
+      <div class="chips">${t.pillar ? `<span class="chip p">${esc(t.pillar)}</span>` : ""}${t.type ? `<span class="chip">${esc(t.type)}</span>` : ""}${t.keyword ? `<span class="chip">搜：${esc(t.keyword)}</span>` : ""}</div>
+      ${t.hook ? `<p class="small">开头钩子：${esc(t.hook)}</p>` : ""}
+      ${t.why ? `<p class="small muted">${esc(t.why)}</p>` : ""}
+      <div class="row"><button class="btn sm primary" data-make="${t.id}">去制作</button><button class="btn sm ghost" data-deltopic="${t.id}">删除</button></div>
+    </div>`).join("") : `<div class="empty"><b style="color:var(--ink)">选题池是空的</b><span>点上面的按钮按当前方向生成一批，或手动输入。每个选题会标注所属支柱和搜索关键词。</span></div>`;
+}
+
+/* ---------- 渲染：制作 ---------- */
+let curFmt = "图文";
+function renderMake() {
+  const dr = P.draft;
+  if (dr && dr.topic) { $("#makeTopicInput").value = dr.topic; curFmt = dr.format || curFmt; }
+  else if (P.platform === "gzh" && curFmt === "图文") curFmt = "长文";
+  $$("#fmtSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === curFmt)));
+  $("#makeTopic").innerHTML = dr && dr.pillar ? `<span class="chip p">${esc(dr.pillar)}</span>` : "从选题池点「去制作」，或直接输入选题。";
+  renderPkg();
+}
+function hl(text) { return esc(text).replace(/【需你补充[^】]*】/g, m => `<span class="gap">${m}</span>`); }
+function renderPkg() {
+  const out = $("#pkgOut");
+  const dr = P.draft;
+  if (!dr || !dr.pkg) { out.innerHTML = `<div class="empty"><b style="color:var(--ink)">内容包会出现在这里</b><span>包括 3 个标题、封面文字、正文草稿、每张图的即梦提示词、视频分镜、标签、首评和发布时间建议。</span></div>`; return; }
+  const k = dr.pkg;
+  const sel = dr.titleIdx || 0;
+  const gaps = (dr.body || "").match(/【需你补充[^】]*】/g) || [];
+  const chk = dr.checks || {};
+  const allOk = ["real", "label", "cover", "words"].every(x => chk[x]);
+  out.innerHTML = `
+  <div class="panel">
+    <div class="row between"><h3>标题</h3><button class="btn sm ghost" data-copy="title">复制所选</button></div>
+    <div class="pk-block">${arr(k.titles).map((t, i) => `<label class="pk-title ${i === sel ? "sel" : ""}"><input type="radio" name="tsel" value="${i}" ${i === sel ? "checked" : ""}><span>${esc(t)}</span></label>`).join("")}</div>
+    <dl class="kv"><dt>封面文字</dt><dd><b>${esc(k.coverText)}</b></dd><dt>发布时间</dt><dd>${esc(k.postTime)}</dd></dl>
+  </div>
+  <div class="panel">
+    <div class="row between"><h3>正文草稿</h3><button class="btn sm ghost" data-copy="body">复制正文</button></div>
+    ${gaps.length ? `<div class="note">还有 <b>${gaps.length}</b> 处【需你补充】要填真实经历。平台按真实度给流量，这一步决定能不能跑出来。</div>` : `<div class="note">已无待补充占位。发布前再通读一遍，把 AI 腔改成你的说话方式。</div>`}
+    <textarea id="bodyEdit" style="min-height:240px">${esc(dr.body || "")}</textarea>
+    <div class="chips">${arr(k.tags).map(t => `<span class="chip">#${esc(String(t).replace(/^#/, ""))}</span>`).join("")}</div>
+    <div class="row"><button class="btn sm ghost" data-copy="tags">复制标签</button></div>
+  </div>
+  ${arr(k.imagePrompts).length ? `<div class="panel">
+    <div class="row between"><h3>配图提示词</h3><button class="btn sm ghost" data-copy="allimg">全部复制</button></div>
+    <p class="small muted">粘贴到即梦或可灵生成，比例 ${esc(k.ratio || "3:4")}。真实照片能拍就拍，AI 图只做封面或示意图。</p>
+    <div class="list">${k.imagePrompts.map((p, i) => `<div class="prompt"><div class="row between"><b class="small">图 ${i + 1} · ${esc(p.purpose)}</b><button class="btn sm ghost" data-copyimg="${i}">复制</button></div><code>${esc(p.prompt)}</code></div>`).join("")}</div>
+    <div class="row"><a class="btn sm" href="https://jimeng.jianying.com/" target="_blank" rel="noopener">打开即梦</a><a class="btn sm" href="https://app.klingai.com/cn/" target="_blank" rel="noopener">打开可灵</a></div>
+  </div>` : ""}
+  ${arr(k.videoScript).length ? `<div class="panel">
+    <div class="row between"><h3>视频分镜</h3><button class="btn sm ghost" data-copy="video">复制分镜</button></div>
+    <div class="tablewrap"><table><thead><tr><th>镜</th><th>秒</th><th>画面</th><th>口播/字幕</th><th>生成提示词</th></tr></thead><tbody>
+    ${k.videoScript.map((v, i) => `<tr><td class="num">${i + 1}</td><td class="num">${esc(v.seconds)}</td><td>${esc(v.visual)}</td><td>${esc(v.voiceover)}</td><td><code style="font-family:var(--f-mono);font-size:11px">${esc(v.prompt)}</code></td></tr>`).join("")}
+    </tbody></table></div>
+  </div>` : ""}
+  <div class="panel">
+    <h3>首评</h3><p>${esc(k.firstComment)}</p>
+    <div class="row"><button class="btn sm ghost" data-copy="comment">复制首评</button></div>
+  </div>
+  <div class="panel">
+    <h3>发布前检查</h3>
+    <label class="check"><input type="checkbox" data-chk="real" ${chk.real ? "checked" : ""}><span>所有【需你补充】都换成了我的真实经历和数据</span></label>
+    <label class="check"><input type="checkbox" data-chk="label" ${chk.label ? "checked" : ""}><span>用了 AI 生成的图或视频，发布页会勾选 AI 内容声明</span></label>
+    <label class="check"><input type="checkbox" data-chk="cover" ${chk.cover ? "checked" : ""}><span>封面字少于 12 个，手机缩略图里看得清</span></label>
+    <label class="check"><input type="checkbox" data-chk="words" ${chk.words ? "checked" : ""}><span>没有"最""第一"等极限词，没有功效承诺</span></label>
+    <p class="small muted">发布由你在 ${esc(PLAT[P.platform])} App 里手动完成。这个页面不会、也不应该替你自动发布：平台会封禁 AI 托管代发的账号。</p>
+    ${gaps.length ? `<p class="small" style="color:var(--bad)">正文还有 ${gaps.length} 处【需你补充】没换掉。</p>` : ""}
+    <button class="btn primary" id="markPosted" ${allOk && !gaps.length ? "" : "disabled"}>我已在 App 里发布，记一笔</button>
+  </div>`;
+}
+
+/* ---------- 渲染：复盘 ---------- */
+function pillarAgg() {
+  const agg = {};
+  POSTS.forEach(p => {
+    const m = metrics(p.metrics); const k = p.pillar || "未分类";
+    agg[k] = agg[k] || { n: 0, withData: 0, reads: 0, saves: 0, follows: 0, exposure: 0 };
+    agg[k].n++;
+    if (m) { agg[k].withData++; agg[k].reads += m.reads; agg[k].follows += m.follows; agg[k].saves += Number(p.metrics.saves) || 0; agg[k].exposure += Number(p.metrics.exposure) || 0; }
+  });
+  return agg;
+}
+function renderReview() {
+  const agg = pillarAgg();
+  const rows = Object.entries(agg);
+  $("#pillarTable").innerHTML = rows.length ? `<div class="tablewrap"><table style="min-width:420px"><thead><tr><th>支柱</th><th>篇数</th><th>点击率</th><th>收藏率</th><th>涨粉转化</th><th>篇均涨粉</th></tr></thead><tbody>
+    ${rows.map(([k, a]) => { const ctr = a.exposure ? a.reads / a.exposure : null, sv = a.reads ? a.saves / a.reads : null, cv = a.reads ? a.follows / a.reads : null;
+      return `<tr><td>${esc(k)}</td><td class="num">${a.n}</td><td><span class="pill ${grade("ctr", ctr)}">${pct(ctr)}</span></td><td><span class="pill ${grade("save", sv)}">${pct(sv)}</span></td><td><span class="pill ${grade("conv", cv)}">${pct(cv)}</span></td><td class="num">${a.withData ? fmt(a.follows / a.withData) : "–"}</td></tr>`; }).join("")}
+    </tbody></table></div>` : `<div class="empty"><b style="color:var(--ink)">还没有已发布的笔记</b><span>在「制作」里完成发布检查后点「记一笔」，笔记就会出现在下面等你录数据。</span></div>`;
+  // 规则建议（不依赖 AI）
+  const adv = [];
+  const withData = POSTS.filter(p => metrics(p.metrics));
+  if (withData.length) {
+    const all = withData.map(p => metrics(p.metrics));
+    const avg = k => { const v = all.map(m => m[k]).filter(x => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+    const ctr = avg("ctr"), sv = avg("save"), cv = avg("conv");
+    if (ctr != null && ctr < 0.025) adv.push(["bad", "点击率偏低：问题在封面和标题。下一篇先做 2 版封面，标题写清人群和结果。"]);
+    if (sv != null && sv < 0.03) adv.push(["bad", "收藏率偏低：信息密度不够。把正文改成清单或步骤，结尾给一张可保存的总结图。"]);
+    if (cv != null && cv < 0.003 && sv != null && sv >= 0.03) adv.push(["warn", "有人收藏但不关注：主页没讲清价值。改简介，置顶 3 篇最好的笔记，首评写「关注看下一期」。"]);
+    const best = rows.filter(([, a]) => a.reads > 0).sort((a, b) => (b[1].follows / b[1].reads) - (a[1].follows / a[1].reads))[0];
+    if (best && rows.length > 1) adv.push(["good", `「${best[0]}」涨粉转化最好，下周提到六成以上。`]);
+    if (withData.length < 5) adv.push(["warn", `目前只有 ${withData.length} 篇有数据，结论不稳。至少 5 篇再做方向判断。`]);
+  }
+  $("#ruleAdvice").innerHTML = adv.map(([c, t]) => `<div class="note ${c === "bad" ? "bad" : ""}">${esc(t)}</div>`).join("");
+  // strategy display
+  const s = P.strategy;
+  let sHtml = "";
+  if (s) {
+    sHtml = `<div class="panel"><div class="row between"><h3>最近一次 AI 复盘</h3><span class="muted small">${esc(s.at || "")}</span></div>
+      <p>${esc(s.verdict)}</p>
+      ${s.outlook ? `<div class="note">${esc(s.outlook)}</div>` : ""}
+      ${arr(s.findings).length ? `<ul class="tasks">${s.findings.map(f => `<li>${esc(f)}</li>`).join("")}</ul>` : ""}
+      <dl class="kv">
+        ${arr(s.keep).length ? `<dt>继续</dt><dd>${s.keep.map(esc).join("；")}</dd>` : ""}
+        ${arr(s.stop).length ? `<dt>停掉</dt><dd>${s.stop.map(esc).join("；")}</dd>` : ""}
+        ${arr(s.tryNext).length ? `<dt>新尝试</dt><dd>${s.tryNext.map(esc).join("；")}</dd>` : ""}
+      </dl>
+      ${arr(s.next7).length ? `<h3>接下来 7 天</h3><div class="list">${s.next7.map((x, i) => `<div class="row between" style="border-bottom:1px solid var(--line);padding-bottom:8px"><span style="flex:1;min-width:0"><span class="muted num small">D${esc(x.day || i + 1)}</span> ${esc(x.title)} <span class="chip">${esc(x.format || "")}</span></span><button class="btn sm" data-addplan="${i}">加入选题</button></div>`).join("")}</div>` : ""}
+    </div>`;
+  }
+  // posts
+  const posts = [...POSTS].sort((a, b) => (b.publishedAt || "").localeCompare(a.publishedAt || ""));
+  $("#postList").innerHTML = sHtml + posts.map(p => {
+    const m = metrics(p.metrics) || {};
+    const mm = p.metrics || {};
+    const f = (k, l) => `<label>${l}<input type="number" inputmode="numeric" id="m-${p.id}-${k}" data-m="${p.id}" data-k="${k}" value="${mm[k] ?? ""}"></label>`;
+    return `<details class="card" ${p.metrics ? "" : "open"}>
+      <summary class="row between" style="gap:8px"><span style="flex:1;min-width:0"><b>${esc(p.title)}</b><br><span class="small muted num">${esc(p.publishedAt)} · ${esc(p.format)} · ${esc(p.pillar || "未分类")}</span></span><span class="caret">›</span></summary>
+      <div class="mchips">
+        <span class="pill ${grade("ctr", m.ctr)}">点击 ${pct(m.ctr)}</span>
+        <span class="pill ${grade("save", m.save)}">收藏 ${pct(m.save)}</span>
+        <span class="pill ${grade("conv", m.conv)}">转粉 ${pct(m.conv)}</span>
+        <span class="pill neutral">CES ${m.ces != null ? fmt(m.ces) : "–"}</span>
+      </div>
+      <div class="metrics">${f("exposure", "曝光")}${f("reads", "阅读/播放")}${f("likes", "点赞")}${f("saves", "收藏")}${f("comments", "评论")}${f("shares", "分享")}${f("follows", "涨粉")}
+        <label>录入时点<select data-m="${p.id}" data-k="stage" id="m-${p.id}-stage"><option ${mm.stage === "24小时" ? "selected" : ""}>24小时</option><option ${mm.stage === "72小时" ? "selected" : ""}>72小时</option><option ${mm.stage === "7天" ? "selected" : ""}>7天</option></select></label></div>
+      <div class="row"><button class="btn sm primary" data-savem="${p.id}">保存数据</button><button class="btn sm ghost" data-delpost="${p.id}">删除</button></div>
+    </details>`;
+  }).join("");
+}
+
+function renderAll() { renderHome(); renderPos(); renderTopic(); renderMake(); renderReview(); }
+
+/* ---------- 交互 ---------- */
+let toastT;
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("show"), 1800); }
+function go(tab) {
+  $$("nav.tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
+  $$("section.view").forEach(s => s.hidden = s.id !== "v-" + tab);
+  window.scrollTo(0, 0);
+}
+$$("nav.tabs button").forEach(b => b.addEventListener("click", () => go(b.dataset.tab)));
+async function copy(text, btn) {
+  try { await navigator.clipboard.writeText(text); toast("已复制"); }
+  catch (e) {
+    const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("已复制"); } catch (_) { toast("复制失败，请长按手动复制"); }
+    ta.remove();
+  }
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("button,[data-go]"); if (!t) return;
+  if (t.dataset.go) go(t.dataset.go);
+  if (t.dataset.choose) { const [src, i] = t.dataset.choose.split(":"); choose(src === "ai" ? P.directions[+i] : PRESETS[+i]); }
+  if (t.dataset.make) {
+    const tp = P.topics.find(x => x.id === t.dataset.make);
+    if (tp) { P.draft = { topicId: tp.id, topic: tp.title, pillar: tp.pillar, format: curFmt, pkg: null }; saveProfile(); renderMake(); go("make"); }
+  }
+  if (t.dataset.deltopic) { P.topics = P.topics.filter(x => x.id !== t.dataset.deltopic); saveProfile(); renderTopic(); }
+  if (t.dataset.copy && P.draft && P.draft.pkg) {
+    const k = P.draft.pkg, d = P.draft;
+    const map = {
+      title: () => (k.titles || [])[d.titleIdx || 0] || "",
+      body: () => $("#bodyEdit").value,
+      tags: () => (k.tags || []).map(x => "#" + String(x).replace(/^#/, "")).join(" "),
+      allimg: () => (k.imagePrompts || []).map((p, i) => `图${i + 1}（${p.purpose}）：${p.prompt}`).join("\n\n"),
+      video: () => (k.videoScript || []).map((v, i) => `镜${i + 1}｜${v.seconds}s｜画面：${v.visual}｜口播：${v.voiceover}｜提示词：${v.prompt}`).join("\n"),
+      comment: () => k.firstComment || ""
+    };
+    copy(map[t.dataset.copy](), t);
+  }
+  if (t.dataset.copyimg != null && P.draft && P.draft.pkg) copy(P.draft.pkg.imagePrompts[+t.dataset.copyimg].prompt, t);
+  if (t.dataset.savem) {
+    const p = POSTS.find(x => x.id === t.dataset.savem); if (!p) return;
+    const m = {}; $$(`[data-m="${p.id}"]`).forEach(inp => { m[inp.dataset.k] = inp.dataset.k === "stage" ? inp.value : (inp.value === "" ? null : Number(inp.value)); });
+    p.metrics = m; p.metricsAt = localDate(); savePost(p); renderReview(); renderHome(); toast("数据已保存");
+  }
+  if (t.dataset.delpost) { POSTS = POSTS.filter(x => x.id !== t.dataset.delpost); deletePost(t.dataset.delpost); renderReview(); renderHome(); }
+  if (t.dataset.addplan != null && P.strategy) {
+    const x = P.strategy.next7[+t.dataset.addplan];
+    P.topics.unshift({ id: uid(), title: x.title, pillar: x.pillar || "", type: x.format || "", keyword: x.keyword || "", hook: "", why: x.why || "", status: "new" });
+    saveProfile(); renderTopic(); toast("已加入选题池");
+  }
+});
+
+$("#platSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; P.platform = b.dataset.v; saveProfile(); renderAll(); });
+$("#fmtSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; curFmt = b.dataset.v; if (P.draft) { P.draft.format = curFmt; saveProfile(); } $$("#fmtSeg button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+[["#pWho", "who"], ["#pSkills", "skills"], ["#pTime", "time"], ["#pFace", "face"], ["#pBudget", "budget"], ["#pMon", "monetize"]].forEach(([s, k]) => $(s).addEventListener("change", () => { P.inputs[k] = $(s).value; saveProfile(); }));
+
+$("#logFans").addEventListener("click", () => {
+  const v = Number($("#fansInput").value);
+  if (!$("#fansInput").value || isNaN(v) || v < 0) { toast("请输入粉丝数"); return; }
+  const d = localDate();
+  P.fansLog = P.fansLog.filter(x => x.date !== d); P.fansLog.push({ date: d, fans: v });
+  if (P.fansLog.length > 400) P.fansLog = P.fansLog.slice(-400);
+  $("#fansInput").value = ""; saveProfile(); renderHome(); toast("已记录今天的粉丝数");
+});
+$("#saveSettings").addEventListener("click", () => {
+  P.startDate = $("#sStart").value || P.startDate; P.startFans = Number($("#sStartFans").value) || 0;
+  P.goal30 = Number($("#sG30").value) || 10000; P.goal150 = Number($("#sG150").value) || 100000;
+  saveProfile(); renderHome(); toast("设置已保存");
+});
+$("#resetAll").addEventListener("click", () => { $("#resetConfirm").hidden = false; });
+$("#resetNo").addEventListener("click", () => { $("#resetConfirm").hidden = true; });
+function wipe() { POSTS.forEach(p => deletePost(p.id)); POSTS = []; P = defaultProfile(); saveProfile(); renderAll(); }
+$("#resetYes").addEventListener("click", () => { $("#resetConfirm").hidden = true; wipe(); toast("已清空"); });
+$("#clearDemo").addEventListener("click", () => { wipe(); go("pos"); toast("示例已清空，从定位开始"); });
+
+$("#addTopic").addEventListener("click", () => {
+  const v = $("#manualTopic").value.trim(); if (!v) return;
+  P.topics.unshift({ id: uid(), title: v, pillar: "", type: "手动", keyword: "", hook: "", status: "new" });
+  $("#manualTopic").value = ""; saveProfile(); renderTopic();
+});
+
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.name === "tsel" && P.draft) { P.draft.titleIdx = +t.value; saveProfile(); renderPkg(); }
+  if (t.dataset.chk && P.draft) { P.draft.checks = P.draft.checks || {}; P.draft.checks[t.dataset.chk] = t.checked; if (t.dataset.chk === "real") P.draft.body = $("#bodyEdit").value; saveProfile(); renderPkg(); }
+});
+let bodyT;
+document.addEventListener("input", e => {
+  if (e.target.id === "bodyEdit" && P.draft) { clearTimeout(bodyT); bodyT = setTimeout(() => { P.draft.body = e.target.value; saveProfile(); }, 800); }
+});
+document.addEventListener("click", e => {
+  if (e.target.id !== "markPosted" || !P.draft || !P.draft.pkg) return;
+  const d = P.draft, k = d.pkg;
+  const post = { id: uid(), title: (k.titles || [])[d.titleIdx || 0] || d.topic, topic: d.topic, pillar: d.pillar || "", format: d.format, platform: P.platform, publishedAt: localDate(), metrics: null };
+  POSTS.push(post); savePost(post);
+  const tp = P.topics.find(x => x.id === d.topicId); if (tp) tp.status = "posted";
+  P.draft = null; saveProfile(); renderAll(); go("review"); toast("已记下，24 小时后回来录数据");
+});
+
+/* ---------- AI：定位 ---------- */
+$("#genDir").addEventListener("click", async () => {
+  const I = P.inputs;
+  I.who = $("#pWho").value.trim(); I.skills = $("#pSkills").value.trim(); saveProfile();
+  if (!I.who && !I.skills) { $("#dirMsg").textContent = "先写一点你是谁、擅长什么，方向才会贴合你。"; return; }
+  const prompt = `你是${PLAT[P.platform]}内容增长策略顾问。根据创作者信息给出 3 个差异化账号方向。
+平台：${PLAT[P.platform]}
+创作者：${I.who}
+擅长/资源：${I.skills}
+每天可投入：${I.time}；出镜：${I.face}；每月工具预算：${I.budget}；变现目标：${I.monetize}
+增长目标：30 天 ${P.goal30} 粉，150 天 ${P.goal150} 粉。
+要求：
+- 方向必须基于创作者真实经历和资源，能持续产出 100 篇以上；
+- 优先平台鼓励的方向（真实经验分享、知识科普、AI 视觉创作），避开搬运、AI 托管、虚假人设；
+- 每个方向 3 个可轮换测试的内容支柱；
+- 诚实评估 30 天达成目标的可能性，speed 用 1-5 分，不要都给高分。
+${RULES}
+只回复 JSON 数组，3 个对象，字段：{"name":"方向名(10字内)","persona":"人设一句话","audience":"目标人群","edge":"差异点","pillars":["支柱1","支柱2","支柱3"],"formats":"主要形式和画幅","speed":3,"monetize":"变现路径","risk":"主要风险","first3":["首发选题1","首发选题2","首发选题3"]}`;
+  const r = await aiJSON(prompt, { tier: "complex", btn: $("#genDir"), streamEl: $("#dirStream"), msgEl: $("#dirMsg") });
+  if (Array.isArray(r) && r.length) { P.directions = r.filter(x => x && x.name).slice(0, 3); saveProfile(); renderPos(); }
+  else if (r) $("#dirMsg").textContent = "返回内容不完整，再试一次。";
+});
+
+/* ---------- AI：选题 ---------- */
+function postsDigest(n = 20) {
+  return [...POSTS].sort((a, b) => (b.publishedAt || "").localeCompare(a.publishedAt || "")).slice(0, n).map(p => {
+    const m = metrics(p.metrics);
+    return `- ${p.publishedAt}｜${p.pillar || "未分类"}｜${p.format}｜${p.title}${m ? `｜点击率${pct(m.ctr)} 收藏率${pct(m.save)} 转粉${pct(m.conv)} 涨粉${m.follows}` : "｜暂无数据"}`;
+  }).join("\n") || "（还没有发布记录）";
+}
+$("#genTopics").addEventListener("click", async () => {
+  if (!P.chosen) { $("#topicMsg").textContent = "先在「定位」里选一个方向。"; return; }
+  const c = P.chosen, s = P.strategy, w = weights();
+  const used = P.topics.map(t => t.title).slice(0, 60).join("；");
+  const prompt = `你是${PLAT[P.platform]}选题编辑。为下面的账号生成 10 个选题。
+账号方向：${c.name}；人设：${c.persona}；人群：${c.audience}；差异点：${c.edge}
+内容支柱及权重：${Object.entries(w).map(([k, v]) => k + " " + v + "%").join("，")}
+当前阶段：${phaseOf(dayNo()).name}（${phaseOf(dayNo()).goal}）
+${s ? `最近复盘结论：${s.verdict}\n继续：${arr(s.keep).join("；")}\n停掉：${arr(s.stop).join("；")}\n新尝试：${arr(s.tryNext).join("；")}` : "还没有复盘，三个支柱平均分配。"}
+最近发布及数据：
+${postsDigest(15)}
+已有选题（不要重复）：${used || "无"}
+要求：
+- 按权重分配支柱；数据好的选题结构可以换角度复用；
+- 每个选题要有用户会搜的关键词；
+- 类型从 痛点解决 / 清单合集 / 对比测评 / 反常识 / 真实经历 / 教程步骤 里选。
+${RULES}
+只回复 JSON 数组，10 个对象：{"title":"选题(可直接做标题方向)","pillar":"所属支柱(用上面的名字)","type":"类型","keyword":"搜索关键词","hook":"开头第一句钩子","why":"为什么现在做它(一句话)"}`;
+  const r = await aiJSON(prompt, { tier: "default", btn: $("#genTopics"), streamEl: $("#topicStream"), msgEl: $("#topicMsg") });
+  if (Array.isArray(r)) {
+    const add = r.filter(x => x && x.title).map(x => ({ id: uid(), title: String(x.title), pillar: String(x.pillar || ""), type: String(x.type || ""), keyword: String(x.keyword || ""), hook: String(x.hook || ""), why: String(x.why || ""), status: "new" }));
+    P.topics = [...add, ...P.topics].slice(0, 120); saveProfile(); renderTopic(); toast(`加入了 ${add.length} 个选题`);
+  }
+});
+
+/* ---------- AI：内容包 ---------- */
+const FMT_SPEC = {
+  "图文": p => p === "gzh" ? "公众号图文：标题 30 字内；正文 800-1500 字；封面 2.35:1；配图 3-5 张。" : "小红书图文笔记：标题 20 字内；正文 300-800 字，短段落、少量表情；配图 6-9 张，比例 3:4，首图是封面。",
+  "视频": () => "竖屏短视频 9:16，时长 30-60 秒，前 3 秒必须给出结果或冲突；5-8 个分镜，每镜 3-8 秒；附口播稿和字幕。",
+  "长文": () => "公众号长文：标题 30 字内；正文 1500-2500 字，分 3-5 个小标题；封面 2.35:1；配图 3-5 张。"
+};
+$("#genPkg").addEventListener("click", async () => {
+  const topic = $("#makeTopicInput").value.trim();
+  if (!topic) { $("#pkgMsg").textContent = "先输入或选择一个选题。"; return; }
+  const c = P.chosen || {};
+  const d = P.draft && P.draft.topic === topic ? P.draft : { topicId: null, topic, pillar: "", format: curFmt };
+  d.format = curFmt;
+  const best = [...POSTS].filter(p => metrics(p.metrics)).sort((a, b) => (metrics(b.metrics).conv || 0) - (metrics(a.metrics).conv || 0)).slice(0, 3).map(p => p.title).join("；");
+  const prompt = `你是${PLAT[P.platform]}内容制作人。为这个选题做一份可直接执行的内容包。
+账号：${c.name || "未定"}；人设：${c.persona || ""}；人群：${c.audience || ""}
+选题：${topic}
+所属支柱：${d.pillar || "未指定"}
+形式要求：${FMT_SPEC[curFmt](P.platform)}
+本号涨粉最好的笔记：${best || "暂无"}（参考结构，不要照抄）
+正文写法：
+- 用第一人称、口语、具体细节；结构用「问题-原因-方法」或「冲突-转折-收获」；
+- 需要真实经历、真实数据、真实照片的地方，写成【需你补充：要补什么】，至少 3 处；
+- 结尾给一个引导评论的问题。
+配图提示词：中文，写清主体、场景、构图、光线、风格、比例，适合即梦或可灵；不出现真实人名、品牌 logo 或他人作品。
+${RULES}
+只回复一个 JSON 对象：
+{"titles":["标题1","标题2","标题3"],"coverText":"封面大字(12字内)","body":"正文草稿","imagePrompts":[{"purpose":"这张图的作用","prompt":"提示词"}],"ratio":"3:4","videoScript":[{"seconds":5,"visual":"画面","voiceover":"口播/字幕","prompt":"视频生成提示词"}],"tags":["话题1","话题2"],"firstComment":"作者首评","postTime":"建议发布时间及理由"}
+图文时 videoScript 给空数组；视频时 imagePrompts 只给封面 1 张。`;
+  const r = await aiJSON(prompt, { tier: "complex", btn: $("#genPkg"), streamEl: $("#pkgStream"), msgEl: $("#pkgMsg") });
+  if (r && typeof r === "object" && !Array.isArray(r)) {
+    d.pkg = r; d.body = String(r.body || ""); d.titleIdx = 0; d.checks = {};
+    P.draft = d;
+    const tp = P.topics.find(x => x.id === d.topicId); if (tp && tp.status === "new") tp.status = "made";
+    saveProfile(); renderMake(); renderTopic();
+  }
+});
+
+/* ---------- AI：复盘 ---------- */
+$("#genReview").addEventListener("click", async () => {
+  if (!P.chosen) { $("#reviewMsg").textContent = "先在「定位」里选一个方向。"; return; }
+  const withData = POSTS.filter(p => metrics(p.metrics));
+  if (withData.length < 3) { $("#reviewMsg").textContent = `至少 3 篇有数据的笔记才值得复盘，现在有 ${withData.length} 篇。`; return; }
+  const d = dayNo(), last = latestFans(), cur = last ? last.fans : P.startFans;
+  const agg = Object.entries(pillarAgg()).map(([k, a]) => `${k}：${a.n}篇，阅读${a.reads}，收藏${a.saves}，涨粉${a.follows}`).join("\n");
+  const fl = [...P.fansLog].sort((a, b) => a.date.localeCompare(b.date)).slice(-30).map(x => `${x.date}:${x.fans}`).join("，");
+  const prompt = `你是${PLAT[P.platform]}账号增长复盘顾问。根据数据给出诊断和下一步调整。
+账号方向：${P.chosen.name}；支柱：${(P.chosen.pillars || []).join("、")}；当前权重：${JSON.stringify(weights())}
+第 ${d + 1} 天，阶段：${phaseOf(d).name}。当前粉丝 ${cur}，今天目标 ${targetAt(d)}，30 天目标 ${P.goal30}，150 天目标 ${P.goal150}。
+粉丝记录：${fl || "无"}
+按支柱汇总：
+${agg}
+逐篇数据（点击率=阅读/曝光，收藏率=收藏/阅读，转粉=涨粉/阅读）：
+${postsDigest(30)}
+参考线（第三方经验值）：点击率低于 2.5% 需改封面标题，8% 以上优秀；收藏率 3% 以上合格，8% 以上容易进大流量池。
+要求：
+- 找出哪种支柱、类型、标题结构在涨粉，哪种在浪费时间；
+- 给出新的支柱权重（合计 100，可以新增或删除支柱）；
+- 给出接下来 7 天每天发什么；
+- 如果按当前速度目标明显达不到，直接说，并给出调整后的现实目标。
+只回复一个 JSON 对象：
+{"verdict":"一句话总判断","outlook":"目标可达性和建议的现实目标","findings":["发现1","发现2","发现3"],"keep":["继续做的"],"stop":["停掉的"],"tryNext":["新尝试"],"weights":{"支柱名":60},"next7":[{"day":1,"title":"选题","pillar":"支柱","format":"图文或视频","keyword":"搜索词","why":"理由"}]}`;
+  const r = await aiJSON(prompt, { tier: "complex", btn: $("#genReview"), streamEl: $("#reviewStream"), msgEl: $("#reviewMsg") });
+  if (r && typeof r === "object" && !Array.isArray(r)) {
+    r.at = localDate(); r.dir = P.chosen.name;
+    if (r.weights && typeof r.weights === "object") { const ws = {}; Object.entries(r.weights).forEach(([k, v]) => { const n = Number(v); if (isFinite(n)) ws[k] = Math.round(n); }); r.weights = ws; }
+    P.strategy = r; saveProfile(); renderAll(); toast("策略已更新，选题会按新权重生成");
+  }
+});
+
+/* ---------- 示例数据 ---------- */
+$("#loadDemo").addEventListener("click", () => {
+  const start = addDays(localDate(), -12);
+  const dir = PRESETS[1];
+  P = { ...defaultProfile(), demo: true, startDate: start, chosen: clone(dir), platform: "xhs",
+    inputs: { ...defaultProfile().inputs, who: "（示例）互联网运营，租住成都老小区", skills: "（示例）会软装搭配，会用 AI 做图" } };
+  const fans = [0, 12, 40, 95, 160, 210, 380, 620, 900, 1150, 1420, 1900, 2350];
+  P.fansLog = fans.map((f, i) => ({ date: addDays(start, i), fans: f }));
+  const demoPosts = [
+    ["800 元改造老破小卧室全记录", "改造前后", "图文", [41000, 3900, 520, 610, 88, 40, 210]],
+    ["租房必买的 10 件小东西", "平价好物", "图文", [18000, 950, 120, 140, 20, 6, 22]],
+    ["签合同前检查的 7 处", "避坑清单", "图文", [26000, 2100, 260, 380, 64, 35, 95]],
+    ["厨房改造 300 元前后对比", "改造前后", "视频", [52000, 6100, 780, 690, 120, 70, 330]],
+    ["宜家平替好物 8 件", "平价好物", "图文", [9000, 310, 30, 25, 4, 1, 5]],
+    ["退租押金被扣怎么办", "避坑清单", "图文", [21000, 1500, 160, 260, 77, 22, 60]],
+    ["阳台从杂物间到咖啡角", "改造前后", "图文", [33000, 2600, 400, 420, 52, 18, 160]]
+  ];
+  POSTS = demoPosts.map((x, i) => ({ id: uid(), title: x[0], topic: x[0], pillar: x[1], format: x[2], platform: "xhs", publishedAt: addDays(start, i + 1),
+    metrics: { exposure: x[3][0], reads: x[3][1], likes: x[3][2], saves: x[3][3], comments: x[3][4], shares: x[3][5], follows: x[3][6], stage: "72小时" } }));
+  P.topics = [{ id: uid(), title: "（示例）卫生间 200 元翻新", pillar: "改造前后", type: "真实经历", keyword: "租房卫生间改造", hook: "房东说不能动，我只花了 200 元", status: "new" }];
+  saveProfile(); POSTS.forEach(savePost); renderAll(); toast("已载入示例数据");
+});
+
+/* ---------- 备份与恢复 ---------- */
+function backupString() {
+  const json = JSON.stringify({ app: "zhangfen", v: 1, at: new Date().toISOString(), profile: P, posts: POSTS });
+  return "ZF1:" + btoa(unescape(encodeURIComponent(json)));
+}
+function parseBackup(text) {
+  let t = String(text || "").trim();
+  try {
+    if (t.startsWith("ZF1:")) t = decodeURIComponent(escape(atob(t.slice(4).replace(/\s+/g, ""))));
+    const o = JSON.parse(t);
+    if (o && o.app === "zhangfen" && o.profile && typeof o.profile === "object") return o;
+  } catch (e) {}
+  return null;
+}
+function renderBackup() {
+  const pill = $("#bkPill"), lb = P.lastBackup;
+  const hasData = POSTS.length || P.fansLog.length || P.chosen;
+  const age = lb ? daysBetween(lb, localDate()) : null;
+  $("#bkFile").hidden = !!window.claude; // 在 Claude 里打开时，页面不能直接下载文件
+  if (store.mode === "cloud") {
+    pill.className = "pill good"; pill.textContent = "已云端同步";
+    $("#bkDesc").textContent = "在 Claude 里打开时，记录自动同步到你的账号，换手机登录同一账号即可。备份码用于导出到网页版或留档。";
+    return;
+  }
+  if (!lb) { pill.className = hasData ? "pill warn" : "pill neutral"; pill.textContent = "未备份"; }
+  else { pill.className = age > 7 ? "pill warn" : "pill good"; pill.textContent = age === 0 ? "今天已备份" : `${age} 天前备份`; }
+  const sn = $("#syncNote");
+  if (sn.textContent.indexOf("失败") < 0 && sn.textContent.indexOf("已满") < 0) sn.textContent = hasData && (age == null || age > 7) ? "本机保存 · 该备份了" : "本机保存";
+}
+function markBackedUp() { P.lastBackup = localDate(); saveProfile(); renderBackup(); }
+$("#bkCopy").addEventListener("click", async () => { await copy(backupString()); markBackedUp(); $("#bkMsg").textContent = "备份码已复制。发到微信「文件传输助手」或存进备忘录。"; });
+$("#bkFile").addEventListener("click", () => {
+  try {
+    const blob = new Blob([backupString()], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = `涨粉作战台备份-${localDate()}.txt`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    markBackedUp(); $("#bkMsg").textContent = "备份文件已下载。";
+  } catch (e) { $("#bkMsg").textContent = "这个浏览器不支持下载，请用「复制备份码」。"; }
+});
+let pendingRestore = null;
+function askRestore(o) {
+  if (!o) { $("#bkMsg").textContent = "没认出备份码。请完整粘贴以 ZF1: 开头的整段文字。"; return; }
+  pendingRestore = o;
+  const n = Array.isArray(o.posts) ? o.posts.length : 0;
+  $("#bkConfirmText").textContent = `备份时间 ${String(o.at || "").slice(0, 10)}，含 ${n} 篇笔记。恢复会覆盖这台手机上的现有记录。`;
+  $("#bkConfirm").hidden = false; $("#bkMsg").textContent = "";
+}
+$("#bkImport").addEventListener("click", () => askRestore(parseBackup($("#bkIn").value)));
+$("#bkPick").addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => askRestore(parseBackup(r.result));
+  r.onerror = () => { $("#bkMsg").textContent = "读取文件失败，换一个文件试试。"; };
+  r.readAsText(f); e.target.value = "";
+});
+$("#bkNo").addEventListener("click", () => { pendingRestore = null; $("#bkConfirm").hidden = true; });
+$("#bkYes").addEventListener("click", () => {
+  const o = pendingRestore; if (!o) return;
+  const oldIds = POSTS.map(p => p.id);
+  P = { ...defaultProfile(), ...o.profile };
+  POSTS = (Array.isArray(o.posts) ? o.posts : []).filter(p => p && p.id);
+  if (store.mode === "cloud") { const keep = new Set(POSTS.map(p => p.id)); oldIds.filter(id => !keep.has(id)).forEach(deletePost); POSTS.forEach(savePost); }
+  saveProfile(); lsSet();
+  pendingRestore = null; $("#bkConfirm").hidden = true; $("#bkIn").value = "";
+  renderAll(); toast("已恢复备份");
+});
+
+/* ---------- 启动 ---------- */
+renderAll();
+updateAiAvail();
+initStore();
+})();
+</script>
+<script>
+/* 独立网页版：离线缓存 + 申请持久存储（减少浏览器自动清理记录） */
+(function(){
+  var okProto = location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  if ("serviceWorker" in navigator && okProto) {
+    addEventListener("load", function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
+  }
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function(){}); } catch (e) {}
+})();
+</script>
+<!-- build 0.2.0 · 2026-10-06 -->
+</body>
+</html>
